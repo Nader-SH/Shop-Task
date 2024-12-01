@@ -3,7 +3,6 @@ import { Users } from '../models';
 interface RegistrationData {
     name: string;
     email: string;
-    image: string;
 }
 
 const registrationQuerie = async (data: RegistrationData, hashed: string) => {
