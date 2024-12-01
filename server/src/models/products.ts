@@ -28,12 +28,16 @@ Products.init(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        email: {
+        count: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        password: {
+        price: {
             type: DataTypes.STRING,
+            allowNull: false,
+        },
+        description: {
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         image: {

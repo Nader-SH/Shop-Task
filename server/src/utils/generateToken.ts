@@ -1,6 +1,5 @@
 import { sign } from 'jsonwebtoken';
 
-
 const key = process.env.SECRET_KEY || '';
 
 const generateToken = (payload: any) =>
