@@ -8,8 +8,6 @@ export default class Users extends Model {
 
     declare email: string;
 
-    declare image: string;
-
     declare password: string;
 }
 
@@ -30,10 +28,6 @@ Users.init(
         },
         password: {
             type: DataTypes.STRING,
-            allowNull: false,
-        },
-        image: {
-            type: DataTypes.TEXT,
             allowNull: false,
         },
     },
