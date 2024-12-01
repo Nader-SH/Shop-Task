@@ -17,6 +17,17 @@ app.use([
   express.urlencoded({ extended: false }),
   express.json(),
 ]);
+declare global {
+  namespace Express {
+    interface Request {
+      user: {
+        id: number;
+        name: string;
+        email: string;
+      };
+    }
+  }
+}
 app.use(router);
 app.use(ErrorMiddleware);
 
