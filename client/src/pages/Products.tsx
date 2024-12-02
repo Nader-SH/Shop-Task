@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Spin, message, Pagination, Row, Col, Button } from 'antd';
 import axios from 'axios';
-import './products.css'; // Import the CSS file
+import './products.css';
 
 interface Product {
     id: number;
@@ -9,6 +9,7 @@ interface Product {
     description: string;
     price: number;
     image?: string;
+    type: string;
 }
 
 const Products: React.FC = () => {
@@ -16,15 +17,17 @@ const Products: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(1);
     const [total, setTotal] = useState<number>(0);
-    const [selectedCategory, setSelectedCategory] = useState<string>('');
+    const [selectedCategory, setSelectedCategory] = useState<string>(''); // Selected category for filtering
+    const [filteredProducts, setFilteredProducts] = useState<Product[]>([]); // Filtered products based on selected category
 
-    const fetchProducts = async (currentPage: number, category: string) => {
+    // Fetch all products (no category filter from the API)
+    const fetchProducts = async (currentPage: number) => {
         setLoading(true);
         try {
-            const response = await axios.get(`/products?page=${currentPage}&category=${category}`);
+            const response = await axios.get('/products', { params: { page: currentPage } });
             const { rows: newProducts = [], count: total } = response.data.data;
             setProducts(newProducts);
-            setTotal(total - 1);
+            setTotal(total);
         } catch (error: any) {
             console.error(error);
             message.error('Failed to load products. Please try again.');
@@ -33,9 +36,23 @@ const Products: React.FC = () => {
         }
     };
 
+    // Filter products based on the selected category
+    const filterProducts = (category: string) => {
+        if (category === '') {
+            setFilteredProducts(products); // Show all products if no category is selected
+        } else {
+            const filtered = products.filter((product) => product.type === category);
+            setFilteredProducts(filtered);
+        }
+    };
+
     useEffect(() => {
-        fetchProducts(page, selectedCategory);
-    }, [page, selectedCategory]);
+        fetchProducts(page);
+    }, [page]);
+
+    useEffect(() => {
+        filterProducts(selectedCategory); // Filter products whenever category changes
+    }, [selectedCategory, products]);
 
     const handlePaginationChange = (newPage: number) => {
         setPage(newPage);
@@ -46,65 +63,69 @@ const Products: React.FC = () => {
         setPage(1); // Reset to the first page when changing categories
     };
 
+    // Category labels for filtering
+    const categories = [
+        { key: 'T-Shirts', label: 'T-Shirts' },
+        { key: 'Shirts', label: 'Shirts' },
+        { key: 'Pants', label: 'Pants' },
+        { key: 'Jeans', label: 'Jeans' },
+        { key: 'Shorts', label: 'Shorts' },
+        { key: 'Suits', label: 'Suits' },
+        { key: 'Jackets', label: 'Jackets' },
+        { key: 'Sweaters', label: 'Sweaters' },
+        { key: 'Sportswear', label: 'Sportswear' },
+    ];
+
     return (
         <div style={{ padding: '20px', maxWidth: '1400px', margin: '0 auto' }}>
 
             {/* Title and Description */}
             <div className="products-header">
-                <h1>
-                    MAN CLOTHING COLLECTION
-                </h1>
+                <h1>MAN CLOTHING COLLECTION</h1>
                 <p>
                     Explore our exclusive collection of men’s clothing designed to elevate your style.
                     From casual wear to formal attire, find everything you need to look sharp and stay comfortable.
                 </p>
             </div>
-            
-            {/* Category Filter Buttons */}
+
+            {/* Filter Buttons */}
             <div style={{ textAlign: 'center', marginBottom: '30px' }}>
                 <Button
-                    type={selectedCategory === 'casual' ? 'primary' : 'default'}
-                    onClick={() => handleCategoryChange('casual')}
+                    key="all"
+                    type={selectedCategory === '' ? 'primary' : 'default'}
+                    onClick={() => handleCategoryChange('')}
                     style={{
                         margin: '0 10px',
-                        backgroundColor: selectedCategory === 'casual' ? '#1e293b' : '#f0f0f0',
-                        color: selectedCategory === 'casual' ? '#fff' : '#1e293b',
+                        backgroundColor: selectedCategory === '' ? '#1e293b' : '#f0f0f0',
+                        color: selectedCategory === '' ? '#fff' : '#1e293b',
                     }}
                 >
-                    Casual
+                    All
                 </Button>
-                <Button
-                    type={selectedCategory === 'formal' ? 'primary' : 'default'}
-                    onClick={() => handleCategoryChange('formal')}
-                    style={{
-                        margin: '0 10px',
-                        backgroundColor: selectedCategory === 'formal' ? '#1e293b' : '#f0f0f0',
-                        color: selectedCategory === 'formal' ? '#fff' : '#1e293b',
-                    }}
-                >
-                    Formal
-                </Button>
-                <Button
-                    type={selectedCategory === 'sportswear' ? 'primary' : 'default'}
-                    onClick={() => handleCategoryChange('sportswear')}
-                    style={{
-                        margin: '0 10px',
-                        backgroundColor: selectedCategory === 'sportswear' ? '#1e293b' : '#f0f0f0',
-                        color: selectedCategory === 'sportswear' ? '#fff' : '#1e293b',
-                    }}
-                >
-                    Sportswear
-                </Button>
+                {categories.map((category) => (
+                    <Button
+                        key={category.key}
+                        type={selectedCategory === category.key ? 'primary' : 'default'}
+                        onClick={() => handleCategoryChange(category.key)}
+                        style={{
+                            margin: '0 10px',
+                            backgroundColor: selectedCategory === category.key ? '#1e293b' : '#f0f0f0',
+                            color: selectedCategory === category.key ? '#fff' : '#1e293b',
+                        }}
+                    >
+                        {category.label}
+                    </Button>
+                ))}
             </div>
 
             {/* Products */}
-            {products.length === 0 && !loading ? (
+            {filteredProducts.length === 0 && !loading ? (
                 <Card style={{ textAlign: 'center', padding: '20px' }}>
                     No Data Yet
                 </Card>
             ) : (
                 <Row gutter={[16, 16]} justify="start">
-                    {products.map((product) => (
+                    {filteredProducts.map((product) => (
                         <Col key={product.id} xs={24} sm={12} md={8} lg={6}>
                             <Card
                                 hoverable
@@ -142,7 +163,7 @@ const Products: React.FC = () => {
                                     description={product.description}
                                 />
                                 <p style={{ fontWeight: 'bold', marginTop: '10px' }}>
-                                    ${Number(product.price).toFixed(2)}  {/* Ensure price is a number */}
+                                    ${Number(product.price).toFixed(2)}
                                 </p>
                             </Card>
                         </Col>

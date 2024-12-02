@@ -11,6 +11,7 @@ export default class Products extends Model {
     declare price: number;
 
     declare description: string;
+    declare type :string;
 
     declare image: string;
 
@@ -37,6 +38,10 @@ Products.init(
             allowNull: false,
         },
         description: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+        },
+        type: {
             type: DataTypes.TEXT,
             allowNull: false,
         },

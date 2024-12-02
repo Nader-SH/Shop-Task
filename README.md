@@ -59,5 +59,42 @@ SECRET_KEY= # Your token Secret key
 * [antd](https://ant.design/components/list/)
 
 
+# User Story for Clothing Website
+
+## User Stories
+
+### 1. Account Creation
+**As a user, I can create an account,**  
+**So that** I can register on the website and have a personalized experience.
+
+### 2. User Login
+**As a user, I can log in to my account,**  
+**So that** I can access my profile and manage my products.
+
+### 3. User Logout
+**As a user, I can log out of my account,**  
+**So that** I can securely end my session.
+
+### 4. Product Upload
+**As a user, I can upload products to the website,**  
+**So that** I can showcase my clothing items and make them available for others to view.
+
+### 5. Product Viewing
+**As a user, I can view the list of products,**  
+**So that** I can browse through the items uploaded on the website.
+
+### 6. Product Filtering
+**As a user, I can filter the products by clothing type,**  
+**So that** I can view products based on categories like T-shirts, shirts, pants, jackets, etc.
+
+### 7. All Products Filter
+**As a user, I can click on the "All" filter button,**  
+**So that** I can view all products without any category filter applied.
+
+### 8. Pagination
+**As a user, I can paginate through the product list,**  
+**So that** I can easily browse multiple pages of products if there are many available.
+
+
 <p align="right"><a href="#top"Back to top</a></p>
 
