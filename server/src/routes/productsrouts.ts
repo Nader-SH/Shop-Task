@@ -15,8 +15,8 @@ userRouter.post('/logout', logout);
 userRouter.post('/login', login);
 userRouter.post('/registration', upload.single("image"),registration);
 userRouter.get('/products', auth, getAllProducts);
-userRouter.post('/addproducts', auth, addProducts);
-userRouter.get('/getallproducts', auth, getAllProducts);
+userRouter.post('/addproduct', auth, addProducts);
+userRouter.get('/products', auth, getAllProducts);
 
 
 

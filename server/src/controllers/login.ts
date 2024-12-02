@@ -19,7 +19,7 @@ const login = async (req: Request, res: Response, next: NextFunction) => {
             name: emailExisted.dataValues.name,
             email: emailExisted.dataValues.email,
         });
-        res.status(201).cookie('token', token).json({ msg: 'Success' });
+        res.status(201).cookie('token', token).json({ msg: 'Success' , user : emailExisted.dataValues });
     } catch (err: any) {
         if (err.name === 'ValidationError') {
             return next(new CustomError(400, 'Something went wrong, sign up again'));
