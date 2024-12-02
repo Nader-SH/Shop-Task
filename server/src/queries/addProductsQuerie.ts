@@ -10,11 +10,12 @@ interface RegistrationData {
 
 const  addProductsQuerie = async (data: RegistrationData , userId : number) => {
     try {
+        console.log(data,"data");
         const product = await Products.create({
             ...data,
-            userId : userId
+            userId
         });
-        return product;
+        
     } catch (error) {
         throw new Error('Error creating Product in database');
     }

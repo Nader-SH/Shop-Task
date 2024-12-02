@@ -5,6 +5,7 @@ const getProductsQuerie = async (page: number) => {
   return Products.findAndCountAll({
     offset: (page - 1) * limit,
     limit,
+    order: [["createdAt", "DESC"]],
   });
 };
 
