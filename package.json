@@ -1,5 +1,5 @@
 {
-  "dependencies": {
-    "antd": "^5.22.2"
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6"
   }
 }
