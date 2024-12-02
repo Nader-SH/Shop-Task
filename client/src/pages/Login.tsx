@@ -11,11 +11,13 @@ const Login: React.FC = () => {
     const onFinish = async (values: { email: string; password: string }) => {
         try {
             const response = await axios.post('/login', values);
-            console.log(response);
             const { user } = response.data;
+            
+            localStorage.setItem('user', JSON.stringify(user));
+
             login(user);
-            message.success('Login successful!');
             navigate('/');
+            message.success('Login successful!');
         } catch (error: any) {
             console.error(error);
             message.error(error.response?.data?.msg || 'Login failed. Please try again.');
@@ -36,15 +38,13 @@ const Login: React.FC = () => {
                 <Form.Item
                     label="Email"
                     name="email"
-                    rules={[{ required: true, message: 'Please input your email!' }]}
-                >
+                    rules={[{ required: true, message: 'Please input your email!' }]}>
                     <Input />
                 </Form.Item>
                 <Form.Item
                     label="Password"
                     name="password"
-                    rules={[{ required: true, message: 'Please input your password!' }]}
-                >
+                    rules={[{ required: true, message: 'Please input your password!' }]}>
                     <Input.Password />
                 </Form.Item>
                 <Form.Item>
