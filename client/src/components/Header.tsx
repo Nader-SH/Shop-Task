@@ -89,6 +89,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ isAuthenticated, setIsAuthenticat
                             <Link to="/add-product">Add Products</Link>
                         </Menu.Item>
                     )}
+
                 </Menu>
 
                 {/* Search bar */}
@@ -114,7 +115,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ isAuthenticated, setIsAuthenticat
                         <Button type="primary" onClick={handleLogout} className="logout-button">
                             Logout
                         </Button>
-                    ) : (
+                    ) : (<>
                         <Button
                             type="primary"
                             onClick={() => navigate('/login')}
@@ -122,6 +123,13 @@ const AppHeader: React.FC<AppHeaderProps> = ({ isAuthenticated, setIsAuthenticat
                         >
                             Login
                         </Button>
+                        <Button
+                            type="primary"
+                            onClick={() => navigate('/register')}
+                            className="login-button">
+                            Register
+                        </Button>
+                    </>
                     )}
                 </div>
             </div>

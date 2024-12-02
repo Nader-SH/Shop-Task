@@ -1,11 +1,20 @@
 import React, { useState } from 'react';
-import { Form, Input, InputNumber, Button, message, Card } from 'antd';
+import { Form, Input, InputNumber, Button, message, Card, Select } from 'antd';
 import axios from 'axios';
+
+const { Option } = Select;
 
 const AddProduct: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
 
-    const onFinish = async (values: { name: string; description: string; price: number; image: string; count: number }) => {
+    const onFinish = async (values: {
+        name: string;
+        description: string;
+        price: number;
+        image: string;
+        count: number;
+        type: string;
+    }) => {
         setLoading(true);
         try {
             // Send the product data to the API
@@ -63,6 +72,23 @@ const AddProduct: React.FC = () => {
                         placeholder="Enter product quantity"
                     />
                 </Form.Item>
+                <Form.Item
+                    label="Product Type"
+                    name="type"
+                    rules={[{ required: true, message: 'Please select the product type!' }]}
+                >
+                    <Select placeholder="Select a product type">
+                        <Option value="T-Shirts">T-Shirts</Option>
+                        <Option value="Shirts">Shirts</Option>
+                        <Option value="Pants">Pants</Option>
+                        <Option value="Jeans">Jeans</Option>
+                        <Option value="Shorts">Shorts</Option>
+                        <Option value="Suits">Suits</Option>
+                        <Option value="Jackets">Jackets</Option>
+                        <Option value="Sweaters">Sweaters</Option>
+                        <Option value="Sportswear">Sportswear</Option>
+                    </Select>
+                </Form.Item>
 
                 <Form.Item
                     label="Image URL"
@@ -74,7 +100,6 @@ const AddProduct: React.FC = () => {
                 >
                     <Input placeholder="https://example.com/image.jpg" />
                 </Form.Item>
-
                 <Form.Item>
                     <Button type="primary" htmlType="submit" block loading={loading}>
                         Add Product

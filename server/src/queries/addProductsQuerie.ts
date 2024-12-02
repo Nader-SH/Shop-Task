@@ -5,6 +5,7 @@ interface RegistrationData {
     count: number;
     price: number;
     description: string;
+    type : string;
     image: string;
 }
 
