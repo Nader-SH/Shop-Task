@@ -1,7 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { Card, Spin, message, Pagination, Row, Col } from 'antd';
+import { Card, Spin, message, Pagination, Row, Col, Button } from 'antd';
 import axios from 'axios';
+import './products.css'; // Import the CSS file
 
 interface Product {
     id: number;
@@ -16,16 +16,13 @@ const Products: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [page, setPage] = useState<number>(1);
     const [total, setTotal] = useState<number>(0);
+    const [selectedCategory, setSelectedCategory] = useState<string>('');
 
-    const fetchProducts = async (currentPage: number) => {
+    const fetchProducts = async (currentPage: number, category: string) => {
         setLoading(true);
         try {
-            const response = await axios.get(`/products?page=${currentPage}`);
-            console.log(response, "API Response");
-
-            const { rows: newProducts = [], count : total   } = response.data.data;
-            console.log("New Products: ", newProducts);
-
+            const response = await axios.get(`/products?page=${currentPage}&category=${category}`);
+            const { rows: newProducts = [], count: total } = response.data.data;
             setProducts(newProducts);
             setTotal(total - 1);
         } catch (error: any) {
@@ -37,16 +34,70 @@ const Products: React.FC = () => {
     };
 
     useEffect(() => {
-        fetchProducts(page);
-    }, [page]);
+        fetchProducts(page, selectedCategory);
+    }, [page, selectedCategory]);
 
     const handlePaginationChange = (newPage: number) => {
         setPage(newPage);
     };
 
+    const handleCategoryChange = (category: string) => {
+        setSelectedCategory(category);
+        setPage(1); // Reset to the first page when changing categories
+    };
+
     return (
-        <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
-            <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Products</h1>
+        <div style={{ padding: '20px', maxWidth: '1400px', margin: '0 auto' }}>
+
+            {/* Title and Description */}
+            <div className="products-header">
+                <h1>
+                    MAN CLOTHING COLLECTION
+                </h1>
+                <p>
+                    Explore our exclusive collection of men’s clothing designed to elevate your style.
+                    From casual wear to formal attire, find everything you need to look sharp and stay comfortable.
+                </p>
+            </div>
+            
+            {/* Category Filter Buttons */}
+            <div style={{ textAlign: 'center', marginBottom: '30px' }}>
+                <Button
+                    type={selectedCategory === 'casual' ? 'primary' : 'default'}
+                    onClick={() => handleCategoryChange('casual')}
+                    style={{
+                        margin: '0 10px',
+                        backgroundColor: selectedCategory === 'casual' ? '#1e293b' : '#f0f0f0',
+                        color: selectedCategory === 'casual' ? '#fff' : '#1e293b',
+                    }}
+                >
+                    Casual
+                </Button>
+                <Button
+                    type={selectedCategory === 'formal' ? 'primary' : 'default'}
+                    onClick={() => handleCategoryChange('formal')}
+                    style={{
+                        margin: '0 10px',
+                        backgroundColor: selectedCategory === 'formal' ? '#1e293b' : '#f0f0f0',
+                        color: selectedCategory === 'formal' ? '#fff' : '#1e293b',
+                    }}
+                >
+                    Formal
+                </Button>
+                <Button
+                    type={selectedCategory === 'sportswear' ? 'primary' : 'default'}
+                    onClick={() => handleCategoryChange('sportswear')}
+                    style={{
+                        margin: '0 10px',
+                        backgroundColor: selectedCategory === 'sportswear' ? '#1e293b' : '#f0f0f0',
+                        color: selectedCategory === 'sportswear' ? '#fff' : '#1e293b',
+                    }}
+                >
+                    Sportswear
+                </Button>
+            </div>
+
+            {/* Products */}
             {products.length === 0 && !loading ? (
                 <Card style={{ textAlign: 'center', padding: '20px' }}>
                     No Data Yet
@@ -63,7 +114,7 @@ const Products: React.FC = () => {
                                             alt={product.name}
                                             src={product.image}
                                             style={{
-                                                height: 200,
+                                                height: 250,
                                                 objectFit: 'cover',
                                                 borderTopLeftRadius: '4px',
                                                 borderTopRightRadius: '4px',
@@ -98,20 +149,25 @@ const Products: React.FC = () => {
                     ))}
                 </Row>
             )}
+
+            {/* Loading Spinner */}
             {loading && (
                 <div style={{ textAlign: 'center', marginTop: 20 }}>
                     <Spin size="large" />
                 </div>
             )}
+
             {/* Pagination */}
             {!loading && total > 0 && (
-                <Pagination
-                    current={page}
-                    total={total}
-                    pageSize={8}
-                    onChange={handlePaginationChange}
-                    style={{ textAlign: 'center', marginTop: 20 }}
-                />
+                <div style={{ alignItems: 'center', justifyContent: 'center', display: 'flex' }}>
+                    <Pagination
+                        current={page}
+                        total={total}
+                        pageSize={8}
+                        onChange={handlePaginationChange}
+                        style={{ textAlign: 'center', marginTop: 20 }}
+                    />
+                </div>
             )}
         </div>
     );

@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  background-color: #1e293b; 
+  color: #ffffff; 
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  border-radius: 12px;
+}
+
+/* Mobile Menu Icon */
+.mobile-menu {
+  display: none;
+}
+
+.menu-icon {
+  font-size: 24px;
+  color: white;
+  border: none;
+  background: transparent;
+}
+
+.desktop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.left-menu {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background: transparent;
+  border: none;
+}
+
+.search-bar {
+  flex: 2;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  gap: 15px;
+}
+
+.user-welcome {
+  color: #f8fafc;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.cart-icon {
+  color: #f8fafc;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.logout-button,
+.login-button {
+  background-color: #3c5275;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  font-weight: 500;
+  padding: 5px 10px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover,
+.login-button:hover {
+  color: #1e293b !important;
+  background-color: white !important;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+  .mobile-menu {
+    display: block;
+  }
+
+  .header-actions {
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .header-actions .logout-button,
+  .header-actions .login-button {
+    font-size: 14px;
+    padding: 5px 8px;
+  }
+
+  .cart-icon {
+    font-size: 24px;
+  }
+
+  .left-menu .ant-menu-item {
+    font-size: 14px;
+    margin-right: 15px;
+  }
+
+  .search-bar {
+    margin: 10px 0;
+    flex: 1;
+    max-width: 100%;
+  }
+
+  .header {
+    flex-wrap: wrap;
+    height: auto;
+    padding: 10px;
+  }
+
+  .desktop-header {
+    display: none; /* Hide desktop header on small screens */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header {
+    text-align: center;
+  }
+
+  .search-bar {
+    margin: 10px 0;
+    max-width: 100%;
+  }
+
+  .header-actions {
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .cart-icon {
+    font-size: 22px;
+  }
+
+  .user-welcome {
+    font-size: 12px;
+  }
+}
+
+/* Drawer Styles */
+.drawer .ant-menu-item {
+  font-size: 16px;
+  color: #3c5275;
+  font-weight: 500;
+}
+
+.drawer .ant-menu-item:hover {
+  color: white;
+  background-color: #3c5275 !important;
+}
+
+.drawer .ant-btn {
+  background-color: #3c5275;
+  border: none;
+  color: white;
+}

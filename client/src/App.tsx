@@ -5,7 +5,8 @@ import Register from './pages/Register';
 import Products from './pages/Products';
 import AddProduct from './pages/AddProduct';
 import AppHeader from './components/Header';
-
+import ContactUs from "./pages/ContactUs";
+import AboutUs from "./pages/AboutUs";
 const App: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
@@ -23,6 +24,9 @@ const App: React.FC = () => {
       <AppHeader isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
 
       <Routes>
+
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/" element={<Products />} />
