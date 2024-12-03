@@ -46,8 +46,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ isAuthenticated, setIsAuthenticat
     };
 
     const onSearch = (value: string) => {
-        console.log('Search query:', value);
-        // Handle search functionality
+        console.log('Search:', value);
     };
 
     const showDrawer = () => {
@@ -165,12 +164,21 @@ const AppHeader: React.FC<AppHeaderProps> = ({ isAuthenticated, setIsAuthenticat
                                 Logout
                             </Button>
                         </Menu.Item>
-                    ) : (
+                    ) : (<>
                         <Menu.Item key="6">
                             <Button type="primary" onClick={() => navigate('/login')}>
                                 Login
                             </Button>
                         </Menu.Item>
+                        <Menu.Item key="7">
+                            <Button
+                                type="primary"
+                                onClick={() => navigate('/register')}
+                                className="login-button">
+                                Register
+                            </Button>
+                        </Menu.Item>
+                    </>
                     )}
                 </Menu>
             </Drawer>
