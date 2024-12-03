@@ -92,12 +92,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({ isAuthenticated, setIsAuthenticat
                 </Menu>
 
                 {/* Search bar */}
-                <Search
-                    placeholder="Search products"
-                    onSearch={onSearch}
-                    enterButton
-                    className="search-bar"
-                />
+                <Search placeholder="input search text" onSearch={onSearch} className='search-bar' />
 
                 {/* Right actions */}
                 <div className="header-actions">

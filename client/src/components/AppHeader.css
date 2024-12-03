@@ -44,8 +44,19 @@
   flex: 2;
   max-width: 400px;
   margin: 0 auto;
+  background-color: #3c5275 !important;
 }
-
+.ant-input-search-button{
+  background-color: #3c5275;
+  color: white !important;
+  border: #1e293b !important;
+  border-radius: 4px;
+}
+.ant-input-search-button:hover{
+  background-color: white;
+  color: #3c5275 !important;
+  border: 1px solid #3c5275 !important;
+}
 .header-actions {
   display: flex;
   align-items: center;
